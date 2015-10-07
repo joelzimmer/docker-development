@@ -15,6 +15,7 @@ Here's the summary:
  * Launch the container
  * Import the data
  * Test
+ * Develop
 
 ## Install the right tools
 
@@ -89,3 +90,8 @@ http://localhost:3456/members/66202
 
 Username: WordPress
 Password: coop
+
+# Develop
+
+Now you can make changes to the files on your host computer and those
+changes will automatically be made on the container.
