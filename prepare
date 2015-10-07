@@ -43,9 +43,12 @@ docker run -d --name foodcoopdev \
   -p 127.0.0.1:6789:80 \
   jamiemcclelland/foodcoopdev:latest runsvdir
 
-printf "Almost done! Now, login to your container and import the default data\n"
-printf "docker exec -it foodcoopdev\n"
-printf "/root/import-data\n"
-printf "exit"
-
-
+printf "\n\n************\n\n"
+printf "Almost done! Now, login to your container and import the default data:\n\n"
+printf "  docker exec -it foodcoopdev bash\n"
+printf "  /root/import-data\n"
+printf "  exit\n\n"
+printf "When that finishes (it will take a while):\n"
+printf "Wordpress: http://localhost:6789/foodcoop-test/\n"
+printf "API: http://localhost:3456/members/66202\n"
+printf "\n\n************\n\n"
