@@ -31,9 +31,9 @@ printf "Downloading config files.\n"
 
 # Config files.
 cd "${cwd}/foodcoop/wordpress/foodcoop-test/"
-wget https://raw.githubusercontent.com/foodcoop/docker-development/master/wp-config.php
+rm wp-config.php && wget https://raw.githubusercontent.com/foodcoop/docker-development/master/wp-config.php
 cd "${cwd}/foodcoop/api/"
-https://raw.githubusercontent.com/foodcoop/docker-development/master/config.json
+wget https://raw.githubusercontent.com/foodcoop/docker-development/master/config.json
 
 printf "Launching Docker image.\n"
 

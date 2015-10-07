@@ -47,7 +47,7 @@ Otherwise... here are the manual directions.
 ```
 git clone --recursive git@github.com:foodcoop/foodcoop-test.git wordpress/foodcoop-test
 ```
- * Change back into your foodcoop directory and checkout the members API code:
+ * Checkout the API code: 
 ```
 git clone git@github.com:foodcoop/foodcoop-api.git api
 ```
@@ -85,6 +85,10 @@ Then run:
 /root/import-data
 
 It will take several minutes to complete.
+
+When it finishes, exit:
+
+exit
 
 # Test
 
