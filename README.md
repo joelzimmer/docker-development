@@ -69,27 +69,27 @@ npm install
 You have to modify this line! Please change the /PATH/TO/DATA with the path
 to your checked out code as created above (e.g. /path/to/foodcoop).
 
-docker run -d --name foodcoop \
-  -v "PATH/TO/DATA/foodcoop:/var/www/foodcoop" \
-  -p 127.0.0.1:3456:3456 \
-  -p 127.0.0.1:6789:80 \
-  foodcoop:latest runsvdir
+    docker run -d --name foodcoop \
+      -v "PATH/TO/DATA/foodcoop:/var/www/foodcoop" \
+      -p 127.0.0.1:3456:3456 \
+      -p 127.0.0.1:6789:80 \
+      foodcoop:latest runsvdir
 
 # Import the data
 
 To import the data, log into the container with:
 
-docker exec -it foodcoop bash
+    docker exec -it foodcoop bash
 
 Then run:
 
-/root/import-data
+    /root/import-data
 
 It will take several minutes to complete.
 
 When it finishes, exit:
 
-exit
+    exit
 
 # Test
 
