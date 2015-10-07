@@ -14,6 +14,7 @@ Here's the summary:
  * Prepare the code on your host
  * Launch the container
  * Import the data
+ * Test
 
 ## Install the right tools
 
@@ -76,3 +77,15 @@ Then run:
 
 It will take several minutes to complete.
 
+# Test
+
+You should be able to access the WordPress site with:
+
+http://localhost:6789/foodcoop-test/
+
+And access the Members API with:
+
+http://localhost:3456/members/66202
+
+Username: WordPress
+Password: coop
