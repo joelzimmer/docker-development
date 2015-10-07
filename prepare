@@ -1,0 +1,37 @@
+#!/bin/bash
+# This file prepares your host computer for running the Foodcoop development
+# container.
+
+# Sanity tests
+if ! which npm &>/dev/null; then
+  printf "Please install npm.\n"
+  exit 1
+fi
+
+if ! which git &>/dev/null; then
+  printf "Please install git.\n"
+  exit 1
+fi
+
+cwd=$(pwd)
+
+# Wordpress
+mkdir -p "${cwd}/foodcoop"
+cd "${cwd}/foodcoop"
+git clone --recursive git@github.com:foodcoop/foodcoop-test.git wordpress/foodcoop-test
+
+# API
+git clone git@github.com:foodcoop/foodcoop-api.git api
+cd api
+npm install
+
+# Config files.
+cd "$cwd"
+cp wp-config.php foodcoop/wordpress/foodcoop-test/
+cp config.json foodcoop/api/
+
+docker create --name foodcoop \
+  -v "$(pwd)/foodcoop:/var/www/foodcoop" \
+  -p 127.0.0.1:3456:3456 \
+  -p 127.0.0.1:6789:80 \
+  foodcoop:latest runsvdir

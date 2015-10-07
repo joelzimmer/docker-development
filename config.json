@@ -1,0 +1,37 @@
+{
+  "server": {
+    "port": 3456
+  },
+  "test": {
+    "username": "66202",
+    "password": "test"
+  },
+  "users": [
+    { "id": 1, "username": "SkedExchange", "password": "coop" },
+    { "id": 2, "username": "WordPress", "password": "coop" },
+    { "id": 3, "username": "MemberSync", "password": "coop" }
+  ],
+  "databases": {
+    "foodcoop": {
+      "host": "localhost",
+      "port": 3306,
+      "user": "api",
+      "password": "api",
+      "database": "api"
+    },
+    "memberServices": {
+      "host": "localhost",
+      "port": 3306,
+      "user": "api",
+      "password": "api",
+      "database": "memservices"
+    },
+    "produce": {
+      "host": "localhost",
+      "port": 3306,
+      "user": "api",
+      "password": "api",
+      "database": "memservices"
+    }
+  }
+}
