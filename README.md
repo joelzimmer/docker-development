@@ -56,8 +56,9 @@ git clone git@github.com:foodcoop/foodcoop-api.git api
 cd api
 npm install
 ```
- * Download the default wp-config.php file into the wordpress directory (overwrite the 
-   existing file):
+ * Download the default wp-config.php file into the wordpress/foodcoop-test
+   directory (overwrite the existing file):
+
    https://raw.githubusercontent.com/foodcoop/docker-development/master/wp-config.php
 
  * Download the default config.json file into the api directory:
