@@ -38,7 +38,7 @@ https://raw.githubusercontent.com/foodcoop/docker-development/master/config.json
 printf "Launching Docker image.\n"
 
 docker run -d --name foodcoopdev \
-  -v "$(pwd)/foodcoop:/var/www/foodcoop" \
+  -v "${cwd}/foodcoop:/var/www/foodcoop" \
   -p 127.0.0.1:3456:3456 \
   -p 127.0.0.1:6789:80 \
   jamiemcclelland/foodcoopdev:latest runsvdir
