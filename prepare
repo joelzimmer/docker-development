@@ -13,6 +13,11 @@ if ! which git &>/dev/null; then
   exit 1
 fi
 
+if ! which docker &>/dev/null; then
+  printf "Please install docker.\n"
+  exit 1
+fi
+
 cwd=$(pwd)
 
 printf "Checking out software.\n"
