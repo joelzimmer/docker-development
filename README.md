@@ -17,8 +17,8 @@ Here's the summary:
 
 ## Install the right tools
 
-Please be sure you have both [npm](https://www.npmjs.com/) and
-[git](https://www.git-scm.com/) installed.
+Please be sure you have [npm](https://www.npmjs.com/),
+[git](https://www.git-scm.com/), and [docker](https://docker.io) installed.
 
 ## Checkout and prepare the code
 
@@ -63,3 +63,16 @@ docker run --name foodcoop \
   -p 127.0.0.1:3456:3456 \
   -p 127.0.0.1:6789:80 \
   foodcoop:latest runsvdir
+
+# Import the data
+
+To import the data, log into the container with:
+
+docker exec -it foodcoop bash
+
+Then run:
+
+/root/import-data
+
+It will take several minutes to complete.
+
