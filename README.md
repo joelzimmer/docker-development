@@ -26,10 +26,16 @@ Please be sure you have [npm](https://www.npmjs.com/),
 
 If you are running Linux or Mac, you can run the included prepare script, which
 will install everything in a directory called foodcop in your home directory.
-If that's ok with you, then run:
+If that's ok with you, then download the script:
+
+https://raw.githubusercontent.com/foodcoop/docker-development/master/prepare
+
+Copy it into the directory that you want to keep your development files.
+
+And execute it from a terminal by typing:
 
 ```
-./prepare
+bash prepare
 ```
 
 Otherwise... here are the manual directions.
@@ -50,10 +56,12 @@ git clone git@github.com:foodcoop/foodcoop-api.git api
 cd api
 npm install
 ```
- * Copy the wp-config.php file into the wordpress directory (overwrite the 
-   existing file).
+ * Download the default wp-config.php file into the wordpress directory (overwrite the 
+   existing file):
+   https://raw.githubusercontent.com/foodcoop/docker-development/master/wp-config.php
 
- * Copy the config.json file into the api directory.
+ * Download the default config.json file into the api directory:
+   (https://raw.githubusercontent.com/foodcoop/docker-development/master/config.json)
 
 # Launch the container:
 
