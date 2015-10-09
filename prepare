@@ -49,11 +49,16 @@ docker run -d --name foodcoopdev \
   jamiemcclelland/foodcoopdev:latest runsvdir
 
 printf "\n\n************\n\n"
-printf "Almost done! Now, login to your container and import the default data:\n\n"
+printf "Almost done! Now, login to your container:\n\n"
 printf "  docker exec -it foodcoopdev bash\n"
+printf "After running this command, you should have a shell in your container.\n"
+printf "Next, import the default data by running this command:\n"
 printf "  /root/import-data\n"
+printf "That will take a few minutes to complete. Maybe like 10 minutes.\n"
+printf "You will know it is done when you see the the cursor following the # symbol.\n"
+printf "When you see that #, type exit to return to your docker console.\n"
 printf "  exit\n\n"
-printf "When that finishes (it will take a while):\n"
+printf "Now you are ready to go. Type the following URLs into your web browser:\n"
 printf "Wordpress: http://localhost:6789/foodcoop-test/\n"
 printf "API: http://localhost:3456/members/66202\n"
 printf "\n\n************\n\n"
