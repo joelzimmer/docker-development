@@ -86,7 +86,7 @@ RUN mkdir -p /var/www/foodcoop
 RUN rm -f /etc/apache2/sites-enabled/000-default.conf
 
 # Useful debugging with PHP
-COPY conf/99-foodcoopdev.ini /etc/php5/conf.d/99-foodcoopdev.ini
+COPY conf/99-foodcoopdev.ini /etc/php5/apache2/conf.d/99-foodcoopdev.ini
 
 COPY docker-entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
