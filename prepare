@@ -34,11 +34,21 @@ npm install
 
 printf "Downloading config files.\n"
 
+downloader=
+
+if which wget >/dev/null; then
+  downloader=wget
+elif which curl >/dev/null; then
+  downloader="curl -O"
+else
+  printf "Failed to find either wget or curl!\n"
+  exit 1
+fi
 # Config files.
 cd "${cwd}/foodcoop/wordpress/foodcoop-test/"
-rm wp-config.php && wget https://raw.githubusercontent.com/foodcoop/docker-development/master/wp-config.php
+rm wp-config.php && $downloader https://raw.githubusercontent.com/foodcoop/docker-development/master/wp-config.php
 cd "${cwd}/foodcoop/api/"
-wget https://raw.githubusercontent.com/foodcoop/docker-development/master/config.json
+$downloader https://raw.githubusercontent.com/foodcoop/docker-development/master/config.json
 
 printf "Launching Docker image.\n"
 
