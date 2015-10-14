@@ -46,17 +46,9 @@ RUN a2enmod rewrite
 # when wordpress tries. 
 RUN ln -s /bin/true /usr/sbin/sendmail
 
-# Checkout code. 
-## This is disabled since we can't checkout the code anonymously
-#RUN cd /var/www/foodcoop && git clone --recursive https://github.com/foodcoop/foodcoop-test.git wordpress
-#RUN cd /var/www/foodcop && git clone https://github.com/foodcoop/foodcoop-api.git api
-
-## Install node dependencies
-#RUN cd /var/www/foodcoop/api && npm install
-
-# Overwrite config files
-#COPY wp-config.php /var/www/foodcoop/wordpress/
-#COPY config.json /var/www/foodcoop/api/
+# Note: we are not checking out the code since it is not available
+# anonymously. Instead, the user has to checkout the code 
+# manually (or use the prepare script). 
 
 # Configure apache 
 COPY wordpress.apache.conf /etc/apache2/sites-available/wordpress.apache.conf
