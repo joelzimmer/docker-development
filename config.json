@@ -31,7 +31,7 @@
       "port": 3306,
       "user": "api",
       "password": "api",
-      "database": "memservices"
+      "database": "produce"
     }
   }
 }
