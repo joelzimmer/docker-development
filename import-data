@@ -1,5 +1,0 @@
-#!/bin/bash
-
-mysql web < /tmp/wordpress.sql
-mysql -e "USE web; UPDATE wp_options SET option_value = 'http://localhost:6789/foodcoop-test' WHERE option_name = 'siteurl' OR option_name = 'home'" web 
-mysql api < /tmp/members.sql

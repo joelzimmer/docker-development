@@ -35,7 +35,7 @@ Copy it into the directory that you want to keep your development files.
 And execute it from a terminal by typing:
 
 ```
-bash prepare
+bash bin/prepare
 ```
 
 Otherwise... here are the manual directions.
@@ -59,15 +59,20 @@ npm install
  * Download the default wp-config.php file into the wordpress/foodcoop-test
    directory (overwrite the existing file):
 
-   https://raw.githubusercontent.com/foodcoop/docker-development/master/wp-config.php
+   https://raw.githubusercontent.com/foodcoop/docker-development/master/conf/wp-config.php
 
  * Download the default config.json file into the api directory:
-   (https://raw.githubusercontent.com/foodcoop/docker-development/master/config.json)
+   (https://raw.githubusercontent.com/foodcoop/docker-development/master/conf/config.json)
 
 # Launch the container:
 
 You have to modify this line! Please change the /PATH/TO/DATA with the path
-to your checked out code as created above (e.g. /path/to/foodcoop).
+to your checked out code as created above (e.g. /path/to/foodcoop). Also,
+if you are running Mac OS X, find out your docker IP address with:
+
+    boot2docker ip
+
+And then replace 127.0.0.1 with the IP address that is returned.
 
     docker run -d --name foodcoop -v "PATH/TO/DATA/foodcoop:/var/www/foodcoop" -p 127.0.0.1:3456:3456 -p 127.0.0.1:6789:80 jamiemcclelland/foodcoopdev:latest runsvdir
 
@@ -89,7 +94,8 @@ When it finishes, exit:
 
 # Test
 
-You should be able to access the WordPress site with:
+You should be able to access the WordPress site with (replace localohst with
+the IP address returned by `boot2docker ip` if you are running Mac OS X):
 
 http://localhost:6789/foodcoop-test/
 

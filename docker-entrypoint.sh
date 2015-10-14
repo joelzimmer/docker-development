@@ -9,9 +9,9 @@ if [ "$1" = 'runsvdir' ]; then
   set -- "$@" -P /etc/service
 
   # Ensure all of our services are properly symlinked so they will start.
-  [ ! -f /etc/service/mysql ] && ln -s /etc/sv/mysql /etc/service/mysql
-  [ ! -f /etc/service/apache ] && ln -s /etc/sv/apache /etc/service/apache
-  [ ! -f /etc/service/node ] && ln -s /etc/sv/node /etc/service/node
+  [ ! -h /etc/service/mysql ] && ln -s /etc/sv/mysql /etc/service/mysql
+  [ ! -h /etc/service/apache ] && ln -s /etc/sv/apache /etc/service/apache
+  [ ! -h /etc/service/node ] && ln -s /etc/sv/node /etc/service/node
 fi
 
 exec "$@"

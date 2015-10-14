@@ -51,7 +51,7 @@ RUN ln -s /bin/true /usr/sbin/sendmail
 # manually (or use the prepare script). 
 
 # Configure apache 
-COPY wordpress.apache.conf /etc/apache2/sites-available/wordpress.apache.conf
+COPY conf/wordpress.apache.conf /etc/apache2/sites-available/wordpress.apache.conf
 RUN a2ensite wordpress.apache.conf
 
 # Stop apache and mysql. We will run them via runit
@@ -60,9 +60,9 @@ RUN /etc/init.d/mysql stop
 
 # Handle service starting with runit.
 RUN mkdir /etc/sv/mysql /etc/sv/apache /etc/sv/node
-COPY mysql.run /etc/sv/mysql/run
-COPY apache.run /etc/sv/apache/run
-COPY node.run /etc/sv/node/run
+COPY runit/mysql.run /etc/sv/mysql/run
+COPY runit/apache.run /etc/sv/apache/run
+COPY runit/node.run /etc/sv/node/run
 
 # The symlinks in /etc/service will be created by the entrypoint script.
 # That way we avoid errors since node won't be able to properly start until
@@ -72,14 +72,21 @@ COPY node.run /etc/sv/node/run
 # init.sql sets up the databases with the minimal data (creates databases
 # creates user/permissions). The developer must run /root/import-data before
 # they can begin developing.
-COPY init.sql /etc/sv/mysql/init.sql
-COPY import-data /root/import-data
-RUN wget --show-progress --progress=dot:giga -q -O /tmp/members.sql https://www.dropbox.com/s/tbzw4lwqqkyoso2/membership_obfuscated_20140722.sql?dl=0 
-RUN wget --show-progress --progress=dot:giga -q -O /tmp/wordpress.sql.gz https://www.dropbox.com/s/o616lav11ydxzj9/foodcoop-test.sql.gz?dl=0 
-RUN gunzip /tmp/wordpress.sql.gz
+COPY sql/init.sql /etc/sv/mysql/init.sql
+COPY bin/import-data /root/import-data
+COPY sql/produce.sql /tmp/produce.sql
+COPY sql/wordpress.sql /tmp/wordpress.sql
+COPY sql/members.sql /tmp/members.sql
 
 # Create the directory that will be mounted on the host.
 RUN mkdir -p /var/www/foodcoop
+
+# Remove the default apache configuration - so all domain names will work
+# when accessing the wordpress install.
+RUN rm -f /etc/apache2/sites-enabled/000-default.conf
+
+# Useful debugging with PHP
+COPY conf/99-foodcoopdev.ini /etc/php5/conf.d/99-foodcoopdev.ini
 
 COPY docker-entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]

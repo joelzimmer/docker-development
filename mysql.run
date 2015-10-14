@@ -1,8 +1,0 @@
-#!/bin/sh
-exec 2>&1
-
-# Always initialize with the base databases and permissions to avoid
-# errors from api. Note: you still have to dump in the databases after
-# you first create this container.
-exec env -i PATH=/usr/bin:/usr/sbin mysqld --init-file=/etc/sv/mysql/init.sql
-

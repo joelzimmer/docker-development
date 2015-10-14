@@ -1,0 +1,4 @@
+#!/bin/sh
+exec 2>&1
+# Sleep 30 seconds to give mysql a chance to start
+sleep 30 && cd /var/www/foodcoop/api && exec chpst -u www-data:www-data /usr/bin/nodejs app.js 

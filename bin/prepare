@@ -1,0 +1,88 @@
+#!/bin/bash
+# This file prepares your host computer for running the Foodcoop development
+# container.
+
+# Sanity tests
+if ! which npm &>/dev/null; then
+  printf "Please install npm.\n"
+  exit 1
+fi
+
+if ! which git &>/dev/null; then
+  printf "Please install git.\n"
+  exit 1
+fi
+
+if ! which docker &>/dev/null; then
+  printf "Please install docker.\n"
+  exit 1
+fi
+
+cwd=$(pwd)
+
+printf "Checking out software.\n"
+
+# Wordpress
+mkdir -p "${cwd}/foodcoop"
+cd "${cwd}/foodcoop"
+
+if [ ! -d "foodcoop-test" ]; then
+  git clone --recursive git@github.com:foodcoop/foodcoop-test.git wordpress/foodcoop-test
+fi
+
+# API
+if [ ! -d "api" ]; then
+  git clone git@github.com:foodcoop/foodcoop-api.git api
+  cd api
+  npm install
+fi
+
+printf "Downloading config files.\n"
+
+downloader=
+
+if which wget >/dev/null; then
+  downloader=wget
+elif which curl >/dev/null; then
+  downloader="curl -O"
+else
+  printf "Failed to find either wget or curl!\n"
+  exit 1
+fi
+# Config files.
+cd "${cwd}/foodcoop/wordpress/foodcoop-test/"
+rm wp-config.php && $downloader https://raw.githubusercontent.com/foodcoop/docker-development/master/conf/wp-config.php
+cd "${cwd}/foodcoop/api/"
+rm -f config.json && $downloader https://raw.githubusercontent.com/foodcoop/docker-development/master/conf/config.json
+
+printf "Launching Docker image.\n"
+
+docker_ip=127.0.0.1
+
+if which boot2docker > /dev/null; then
+  docker_ip=$(boot2docker ip)
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  # Try what seems to be the default.
+  docker_ip=192.168.99.100
+fi
+
+docker run -d --name foodcoopdev \
+  -v "${cwd}/foodcoop:/var/www/foodcoop" \
+  -p $docker_ip:3456:3456 \
+  -p $docker_ip:6789:80 \
+  jamiemcclelland/foodcoopdev:latest runsvdir
+
+printf "\n\n************\n\n"
+printf "Almost done! Now, login to your container:\n\n"
+printf "  docker exec -it foodcoopdev bash\n"
+printf "After running this command, you should have a shell in your container.\n"
+printf "Next, import the default data by running this command:\n"
+printf "  /root/import-data\n"
+printf "That will take a few minutes to complete. Maybe like 10 minutes.\n"
+printf "You will know it is done when you see the the cursor following the # symbol.\n"
+printf "When you see that #, type exit to return to your docker console.\n"
+printf "  exit\n\n"
+printf "Now you are ready to go. Type the following URLs into your web browser:\n"
+printf "Wordpress: http://$docker_ip:6789/foodcoop-test/\n"
+printf "API: http://$docker_ip:3456/members/66202\n"
+printf "\n\n************\n\n"
