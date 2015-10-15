@@ -28,14 +28,14 @@ If you are running Linux or Mac, you can run the included prepare script, which
 will install everything in a directory called foodcop in your home directory.
 If that's ok with you, then download the script:
 
-https://raw.githubusercontent.com/foodcoop/docker-development/master/prepare
+https://raw.githubusercontent.com/foodcoop/docker-development/master/bin/prepare
 
 Copy it into the directory that you want to keep your development files.
 
 And execute it from a terminal by typing:
 
 ```
-bash bin/prepare
+bash prepare
 ```
 
 Otherwise... here are the manual directions.

@@ -33,6 +33,9 @@ if [ ! -d "foodcoop-test" ]; then
     printf "I would suggest starting over.\n"
     exit 1
   fi
+else
+  printf "foodcop-test already checked out. If you are having problems\n"
+  printf "you might want to delete it and re-run this script.\n"
 fi
 
 # API
@@ -50,6 +53,9 @@ if [ ! -d "api" ]; then
     printf "I would suggest starting over.\n"
     exit 1
   fi
+else
+  printf "api already checked out. If you are having problems\n"
+  printf "you might want to delete it and re-run this script.\n"
 fi
 
 printf "Downloading config files.\n"
@@ -79,6 +85,17 @@ if which boot2docker > /dev/null; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   # Try what seems to be the default.
   docker_ip=192.168.99.100
+fi
+
+printf "Using %s as your Docker IP address.\n" "$docker_ip"
+
+# See if the container is already ready running and if so stop and remove it.
+if docker ps | grep foodcoopdev > /dev/null; then
+  docker stop foodcoopdev
+fi
+
+if docker inspect foodcoopdev &>/dev/null; then
+  docker rm foodcoopdev
 fi
 
 docker run -d --name foodcoopdev \
