@@ -76,7 +76,9 @@ COPY sql/init.sql /etc/sv/mysql/init.sql
 COPY bin/import-data /root/import-data
 COPY sql/produce.sql /tmp/produce.sql
 COPY sql/wordpress.sql /tmp/wordpress.sql
-COPY sql/members.sql /tmp/members.sql
+
+# This dump is too big for git (more than 100Mb)
+RUN wget --show-progress --progress=dot:giga -q -O /tmp/members.sql https://www.dropbox.com/s/tbzw4lwqqkyoso2/membership_obfuscated_20140722.sql?dl=0
 
 # Create the directory that will be mounted on the host.
 RUN mkdir -p /var/www/foodcoop
