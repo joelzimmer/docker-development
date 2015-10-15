@@ -28,13 +28,28 @@ cd "${cwd}/foodcoop"
 
 if [ ! -d "foodcoop-test" ]; then
   git clone --recursive git@github.com:foodcoop/foodcoop-test.git wordpress/foodcoop-test
+  if [ "$?" -ne "0" ]; then
+    printf "There was a problem checking out the wordpress git repo. Maybe a bad password?\n"
+    printf "I would suggest starting over.\n"
+    exit 1
+  fi
 fi
 
 # API
 if [ ! -d "api" ]; then
   git clone git@github.com:foodcoop/foodcoop-api.git api
+  if [ "$?" -ne "0" ]; then
+    printf "There was a problem checking out the api git repo. Maybe a bad password?\n"
+    printf "I would suggest starting over.\n"
+    exit 1
+  fi
   cd api
   npm install
+  if [ "$?" -ne "0" ]; then
+    printf "There was a problem checking running npm. Are you sure npm is installed?.\n"
+    printf "I would suggest starting over.\n"
+    exit 1
+  fi
 fi
 
 printf "Downloading config files.\n"
@@ -73,16 +88,31 @@ docker run -d --name foodcoopdev \
   jamiemcclelland/foodcoopdev:latest runsvdir
 
 printf "\n\n************\n\n"
-printf "Almost done! Now, login to your container:\n\n"
-printf "  docker exec -it foodcoopdev bash\n"
+printf "Almost done! Now, login to your container by typing:\n\n"
+printf "  docker exec -it foodcoopdev bash\n\n"
 printf "After running this command, you should have a shell in your container.\n"
-printf "Next, import the default data by running this command:\n"
-printf "  /root/import-data\n"
+printf "Next, import the default data by running this command:\n\n"
+printf "  /root/import-data\n\n"
 printf "That will take a few minutes to complete. Maybe like 10 minutes.\n"
 printf "You will know it is done when you see the the cursor following the # symbol.\n"
-printf "When you see that #, type exit to return to your docker console.\n"
+printf "When you see that #, type exit to return to your docker console:\n\n"
 printf "  exit\n\n"
+if [ -f /etc/hosts ]; then
+  if grep foodcoopdev /etc/hosts >/dev/null; then
+    printf "foodcoopdev is already in your hosts file.\n"
+  else
+    printf "We will now create an /etc/hosts entry so that when you type\n"
+    printf "foodcoopdev in your browser, it will resolve to the IP address that\n"
+    printf "your docker container is listening on. This requires that you type\n"
+    printf "in your sudo password.\n"
+    echo "$docker_ip foodcoopdev" | sudo tee -a /etc/hosts >/dev/null
+  fi
+else
+  printf "I can't find an /etc/hosts file on your computer. Maybe you are\n"
+  printf "running Windows? You will need to find your hosts file and ensure\n"
+  printf "that the domain foodcoopdev is assigned to the IP $docker_ip.\n"
+fi
 printf "Now you are ready to go. Type the following URLs into your web browser:\n"
-printf "Wordpress: http://$docker_ip:6789/foodcoop-test/\n"
-printf "API: http://$docker_ip:3456/members/66202\n"
+printf "Wordpress: http://foodcoopdev:6789/foodcoop-test/\n"
+printf "API: http://foodcoopdev:3456/members/66202\n"
 printf "\n\n************\n\n"
