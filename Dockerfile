@@ -36,8 +36,12 @@ RUN sed -i "s/^key_buffer\s/key_buffer_size\t/g" /etc/mysql/my.cnf
 RUN sed -i "s/^myisam-recover\s/myisam-recover-options\t/g" /etc/mysql/my.cnf
 
 # Avoid Apache complaint about server name
-RUN echo "ServerName foodcoop.local" > /etc/apache2/conf-available/foodcoop.conf
+RUN echo "ServerName foodcoopdev" > /etc/apache2/conf-available/foodcoop.conf
 RUN a2enconf foodcoop 
+
+# Add foodcoopdev to /etc/hosts file so we can make local calls to the web site
+# via php.
+RUN echo "127.0.0.1 foodcoopdev" >> /etc/hosts
 
 # Wordpress wants mod rewrite.
 RUN a2enmod rewrite

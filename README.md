@@ -74,7 +74,7 @@ if you are running Mac OS X, find out your docker IP address with:
 
 And then replace 127.0.0.1 with the IP address that is returned.
 
-    docker run -d --name foodcoop -v "PATH/TO/DATA/foodcoop:/var/www/foodcoop" -p 127.0.0.1:3456:3456 -p 127.0.0.1:6789:80 jamiemcclelland/foodcoopdev:latest runsvdir
+    docker run -d --name foodcoop -v "PATH/TO/DATA/foodcoop:/var/www/foodcoop" -p 127.0.0.1:3456:3456 -p 127.0.0.1:6789:6789 jamiemcclelland/foodcoopdev:latest runsvdir
 
 # Import the data
 
