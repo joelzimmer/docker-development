@@ -72,9 +72,9 @@ if you are running Mac OS X, find out your docker IP address with:
 
     boot2docker ip
 
-And then replace 127.0.0.1 with the IP address that is returned.
+And then replace in the -p lines (not the --add-host line) "127.0.0.1" with the IP address that is returned.
 
-    docker run -d --name foodcoop -v "PATH/TO/DATA/foodcoop:/var/www/foodcoop" -p 127.0.0.1:3456:3456 -p 127.0.0.1:6789:6789 jamiemcclelland/foodcoopdev:latest runsvdir
+    docker run -d --name foodcoop --add-host foodcoopdev:127.0.0.1 -v "PATH/TO/DATA/foodcoop:/var/www/foodcoop" -p 127.0.0.1:3456:3456 -p 127.0.0.1:6789:6789 jamiemcclelland/foodcoopdev:latest runsvdir
 
 # Import the data
 

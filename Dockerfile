@@ -39,9 +39,8 @@ RUN sed -i "s/^myisam-recover\s/myisam-recover-options\t/g" /etc/mysql/my.cnf
 RUN echo "ServerName foodcoopdev" > /etc/apache2/conf-available/foodcoop.conf
 RUN a2enconf foodcoop 
 
-# Add foodcoopdev to /etc/hosts file so we can make local calls to the web site
-# via php.
-RUN echo "127.0.0.1 foodcoopdev" >> /etc/hosts
+# Ensure Apache listens on port 6789
+RUN sed -i "s/Listen 80/Listen 6789/" /etc/apache2/ports.conf
 
 # Wordpress wants mod rewrite.
 RUN a2enmod rewrite

@@ -20,13 +20,13 @@ fi
 
 cwd=$(pwd)
 
-printf "Checking out software.\n"
+printf "Checking out software in %s.\n" "$cwd"
 
 # Wordpress
 mkdir -p "${cwd}/foodcoop"
 cd "${cwd}/foodcoop"
 
-if [ ! -d "foodcoop-test" ]; then
+if [ ! -d "wordpress/foodcoop-test" ]; then
   git clone --recursive git@github.com:foodcoop/foodcoop-test.git wordpress/foodcoop-test
   if [ "$?" -ne "0" ]; then
     printf "There was a problem checking out the wordpress git repo. Maybe a bad password?\n"
@@ -102,6 +102,7 @@ docker run -d --name foodcoopdev \
   -v "${cwd}/foodcoop:/var/www/foodcoop" \
   -p $docker_ip:3456:3456 \
   -p $docker_ip:6789:6789 \
+  --add-host foodcoopdev:127.0.0.1 \
   jamiemcclelland/foodcoopdev:latest runsvdir
 
 printf "\n\n************\n\n"
