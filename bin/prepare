@@ -72,7 +72,7 @@ else
 fi
 # Config files.
 cd "${cwd}/foodcoop/wordpress/foodcoop-test/"
-rm wp-config.php && $downloader https://raw.githubusercontent.com/foodcoop/docker-development/master/conf/wp-config.php
+rm -f wp-config.php && $downloader https://raw.githubusercontent.com/foodcoop/docker-development/master/conf/wp-config.php
 cd "${cwd}/foodcoop/api/"
 rm -f config.json && $downloader https://raw.githubusercontent.com/foodcoop/docker-development/master/conf/config.json
 
