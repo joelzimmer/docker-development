@@ -18,6 +18,12 @@ if ! which docker &>/dev/null; then
   exit 1
 fi
 
+if ! which boot2docker &>/dev/null; then
+  printf "You may want to install & configure boot2docker"
+  printf "Otherwise you may need to adjust the IP address"
+  printf "used to bind to this machine"
+fi
+
 cwd=$(pwd)
 
 printf "Checking out software in %s.\n" "$cwd"
@@ -34,7 +40,7 @@ if [ ! -d "wordpress/foodcoop-test" ]; then
     exit 1
   fi
 else
-  printf "foodcop-test already checked out. If you are having problems\n"
+  printf "foodcoop-test already checked out. If you are having problems\n"
   printf "you might want to delete it and re-run this script.\n"
 fi
 
@@ -84,6 +90,7 @@ if which boot2docker > /dev/null; then
   docker_ip=$(boot2docker ip)
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   # Try what seems to be the default.
+  # This can be problematic, setting it to 127.0.0.1 can work locally
   docker_ip=192.168.99.100
 fi
 
@@ -91,18 +98,21 @@ printf "Using %s as your Docker IP address.\n" "$docker_ip"
 
 # See if the container is already ready running and if so stop and remove it.
 if docker ps | grep foodcoopdev > /dev/null; then
+  printf "Stopping docker image\n"
   docker stop foodcoopdev
 fi
 
 if docker inspect foodcoopdev &>/dev/null; then
+  printf "Removing docker image\n"
   docker rm foodcoopdev
 fi
 
+printf "Starting docker\n"
 docker run -d --name foodcoopdev \
   -v "${cwd}/foodcoop:/var/www/foodcoop" \
   -p $docker_ip:3456:3456 \
   -p $docker_ip:6789:6789 \
-  --add-host foodcoopdev:127.0.0.1 \
+  --add-host foodcoopdev:$docker_ip \
   jamiemcclelland/foodcoopdev:latest runsvdir
 
 printf "\n\n************\n\n"
